@@ -1,0 +1,18 @@
+.container {
+  padding: 2px;
+  display: flex;
+  width: 1500px;
+  background-color:white;
+}
+
+.container__player {
+  display: flex;
+  color: red;
+  background-color: red;
+  width: 38.5%;
+}
+
+.container__stats {
+  display: flex;
+  background-color: green;
+}

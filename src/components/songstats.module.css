@@ -1,0 +1,11 @@
+.table {
+  position: relative;
+  /* top: 200px; */
+  margin-left: 410px;
+  /* text-align: center; */
+  /* width: 41.4%; */
+}
+
+.content {
+  padding: 1em 2em;
+}

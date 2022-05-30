@@ -1,0 +1,81 @@
+.box {
+  text-align: center;
+  position: relative;
+}
+
+.localTopLevel {
+  border: 1px solid white;
+}
+/* .top { 
+  composes: localTopLevel;
+ } */
+
+.tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  display:inline-block;
+  border-width: 200px;
+  /* border-bottom: 4px solid black; */
+}
+
+.dropZone {
+  position: relative;
+  display: flex;
+  top: 18px;
+  left: 10%;
+}
+
+.table {
+  position: absolute;
+  /* top: 200px; */
+  /* margin-left: 410px; */
+  text-align: center;
+  width: 41.4%;
+}
+
+.tabs > li {
+  padding: 0.5em 1em;
+  margin: 0 1em; 
+  /* this transform is causing the unpleasant shifting. Maybe increase container space inside, create fixed everything? */
+  transition: transform 430ms;
+  text-align: center; 
+   /* https://github.com/atlassian/react-beautiful-dnd/issues/128 */
+}
+
+.tabs > li:hover {
+  transform: scale(1.15);
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  /* This increase in padding is throwing off below elements */
+  border-bottom: 5px solid black;
+  border-top: 2px solid black;
+}
+
+.current {
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom: 5px solid black;
+  border-top: 2px solid black;
+}
+
+.content {
+  padding: 1em 2em;
+}
+
+.links {
+  text-decoration: none;
+  color: black;
+}
+.links:hover {
+  color: rgb(255, 34, 225);
+}
