@@ -1,0 +1,10 @@
+###
+
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "code": "AQAczy0u-iOPjziWqiEbtBqesTvC5dg5zV8E96p0aBzQl7aAQ9oVo8htAa2qjl8MCVjpl3NSMuhVEiH73h1Rn4JBFm1_koKip7zKCstl_Pf_DvVcsbf-wBq8o33CB1KH1HcGqJ-6-AMnHBNlwD_NOEcOOn9mNJxuDpNzGcPgx2W7viueg6PfT9IaPZ2yoGd9f9W9Pw-8Ts1B2jyWAqBJ2XU6kTRjcWDbImmqeso4Fgxrd59omLsOSPZpGtSDCsbk4h0fM5VUDdvlIr0KW4bUDa6t3A6ww_KpQXDcpRtIVchnStXmaORgsiJ4Ii9xqjojUoT2jXddiCPMuvnEtRSeFcUMFAeK5v17asY_MSfVp2wiKVRpyrvqsIo"
+}
+
+###

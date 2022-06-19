@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import Songs from './Songs'
+import Songs from './SongSelector'
 import SongTabs from './SongTabs'
 import styles from './playlistcustomizer.module.css'
-import SpotifyWebApi from 'spotify-web-api-js'
 import Player from './Player'
+import SpotifyWebApi from 'spotify-web-api-node'
 
-const spotifyApi = new SpotifyWebApi()
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.REACT_APP_CLIENT_ID
+})
 
 const PlaylistCustomizer = ({ token }) => {
-  const defaultPlaylistName = 'yesyseyesyes'
+  const defaultPlaylistName = 'test'
 
   const [isLoading, setLoading] = useState(false)
 
@@ -51,7 +53,6 @@ const PlaylistCustomizer = ({ token }) => {
    * infinite scroll: (not useful for current implementation which needs songs to be searchable without delay)
    *
     const prevY = useRef(0) // storing the last intersection y position
-
     const options = {
       root: null,
       rootMargin: '0px',
@@ -59,11 +60,9 @@ const PlaylistCustomizer = ({ token }) => {
     }
     async function handleObserver (entities, observer) {
       const y = entities[0].boundingClientRect.y
-
       if (prevY.current > y) {
         await getSavedSongs()
       }
-
       prevY.current = await y
     }
     const observer = useRef(new IntersectionObserver(handleObserver, options))
@@ -71,7 +70,16 @@ const PlaylistCustomizer = ({ token }) => {
 
   useEffect(() => {
     spotifyApi.setAccessToken(token)
-  }, [])
+  }, [token])
+
+  useEffect(async function () {
+    await getUserId()
+    await getSavedSongs()
+  }, [token])
+
+  useEffect(() => {
+    console.log('PlaylistCustomizer rendered')
+  })
 
   async function getUserId () {
     spotifyApi.getMe()
@@ -86,14 +94,12 @@ const PlaylistCustomizer = ({ token }) => {
   }
 
   async function getSavedSongs () {
-    console.log('token', token)
-    console.log('called')
     const offset = 50
     for (let i = 0; i < totalSaved; i += offset) {
       await spotifyApi.getMySavedTracks({ limit: offset, offset: i })
         .then((response) => {
           setTotalSaved(response.total)
-          setSavedSongs(savedSongs => [...savedSongs, ...response.items])
+          setSavedSongs(savedSongs => [...savedSongs, ...response.body.items])
         })
         .catch((err) => {
           console.error(err)
@@ -112,17 +118,17 @@ const PlaylistCustomizer = ({ token }) => {
     console.log('current index recorded', currentSongIndex)
     const index = ind - currentSongIndex
     console.log('skip this many times', index)
-    await spotifyApi.setVolume(0)
+    await spotifyApi.setVolume(0.0)
     // const index = numberToSkip - currentSongIndex
     const idx = Math.abs(index)
     if (index > 0) {
       for (let i = 0; i < idx; i++) {
-        await spotifyApi.setVolume(0)
+        await spotifyApi.setVolume(0.0)
         await spotifyApi.skipToNext()
       }
     } else {
       for (let i = 0; i < idx; i++) {
-        await spotifyApi.setVolume(0)
+        await spotifyApi.setVolume(0.0)
         await spotifyApi.skipToPrevious()
       }
     }
@@ -136,14 +142,8 @@ const PlaylistCustomizer = ({ token }) => {
   //   }
   // }, [targetElement])
 
-  useEffect(async function () {
-    await getUserId()
-    await getSavedSongs()
-  }, [])
-
   const handleSelectedSongs = (event) => {
     event.preventDefault()
-    console.log('this called')
     setShowSavedSongs(false)
     // console.log('event', event.target.song_line._valueTracker._wrapperState.initialValue.track.name)
     setSelectedSongs(selectedSongs => [...selectedSongs, ...Array.from(event.target.song_line).filter(song => song.checked === true).map(song => JSON.parse(song.value))])
@@ -177,7 +177,6 @@ const PlaylistCustomizer = ({ token }) => {
   }
 
   const handleOnDragEnd = async (passed) => {
-    console.log('passed', passed)
     if (!passed.destination) {
       console.log('failed')
       return
@@ -226,7 +225,6 @@ const PlaylistCustomizer = ({ token }) => {
   //     </Button>
   //   )
   // }
-
   return (
     <div>
       {retrievedSongs ? <Songs showSavedSongs={showSavedSongs} reference={setTargetElement} songs={savedSongs} handleSelectedSongs={handleSelectedSongs} /> : <></>}

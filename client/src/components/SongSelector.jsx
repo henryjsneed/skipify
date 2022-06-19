@@ -1,6 +1,6 @@
 import { Form, Button, Modal, ModalBody, ModalFooter } from 'react-bootstrap'
 import { useState } from 'react'
-import style from './songs.module.css'
+import style from './songselector.module.css'
 import { withTheme } from '@emotion/react'
 import '../index.scss'
 

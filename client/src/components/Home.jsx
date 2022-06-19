@@ -1,7 +1,8 @@
-import React from 'react'
 import style from './home.module.css'
 import PlaylistCustomizer from './PlaylistCustomizer'
-export default function Home ({ token }) {
+import authService from '../services/AuthService'
+export default function Home ({ code }) {
+  const token = authService(code)
   return (
     <>
       <div className={style.home} id='home'>
@@ -10,7 +11,7 @@ export default function Home ({ token }) {
           <p className={style.home__description}>WIP ...</p>
           {/* <button className={style.main__btn}><a className={style.main__btn.a} href='#'>Create Your Playlist</a></button> */}
           <div className={style.main} id='about'>
-            <PlaylistCustomizer token={token} />
+            {token ? <PlaylistCustomizer token={token} /> : <></>}
           </div>
         </div>
       </div>

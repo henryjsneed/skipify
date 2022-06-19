@@ -1,4 +1,3 @@
-import React from 'react'
 import style from './player.module.css'
 const Player = ({ item, progressMs, isPlaying }) => {
   const backgroundStyles = {

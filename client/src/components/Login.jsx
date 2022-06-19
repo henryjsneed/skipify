@@ -1,10 +1,10 @@
-import React from 'react'
 import style from './login.module.css'
 import logo from '../assets/Spotify_Logo_RGB_White.png'
 import icon from '../assets/Spotify_Icon_RGB_White.png'
-import { authEndpoint, clientId, redirectUri, scopes } from '../config'
+import { authEndpoint, scopes } from '../config'
 
 const Login = (token) => {
+  const AUTH_URL = `${authEndpoint}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=${scopes.join('%20')}&response_type=code&show_dialog=true`
   return (
     <div className={style.page}>
       <nav className={style.navbar}>
@@ -13,7 +13,7 @@ const Login = (token) => {
           <div className={style.navbar__toggle} id='mobile-menu' />
           <ul className={style.navbar__menu}>
             <li className={style.navbar__btn}>
-              <a target='_blank' href='https://open.spotify.com' className={style.button} id='signup' rel='noreferrer'><img className={style.button__img} src={icon} />
+              <a target='_blank' href={process.env.REACT_APP_SPOTIFY_URL} className={style.button} id='signup' rel='noreferrer'><img className={style.button__img} src={icon} />
                 Play on Spotify
               </a>
             </li>
@@ -26,9 +26,7 @@ const Login = (token) => {
           <h1 className={style.home__heading}>Welcome to <span>Spot Jockey</span></h1>
           <p className={style.home__description}>Create Your First Perfectly Timed Spotify Playlist</p>
           <button className={style.main__btn}>
-            {console.log('redirectURI', redirectUri)}
-            {console.debug(`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`)}
-            <a className={style.main__btn.a} href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`}>
+            <a className={style.main__btn.a} href={AUTH_URL}>
               Login to Spotify
             </a>
           </button>
