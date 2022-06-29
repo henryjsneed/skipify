@@ -14,13 +14,13 @@ const useAuth = (code) => {
         } = await axios.post('http://localhost:3001/login', {
           code
         })
-        console.log('this is acces', access_token)
+        console.log('access token: ', access_token)
         setAccessToken(access_token)
         setRefreshToken(refresh_token)
         setExpiresIn(expires_in)
         window.history.pushState({}, null, '/')
       } catch (error) {
-        console.log(' his im am client this is error: ', error)
+        console.log('Client API error: ', error)
         window.location = '/'
       }
     })()

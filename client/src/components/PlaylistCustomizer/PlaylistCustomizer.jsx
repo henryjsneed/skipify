@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Table } from 'react-bootstrap'
-import Songs from './SongSelector'
-import SongTabs from './SongTabs'
+import React, { useState, useRef, useEffect } from 'react'
+import Songs from '../SongSelector/SongSelector'
+import SongTabs from '../SongTabs/SongTabs'
 import styles from './playlistcustomizer.module.css'
-import Player from './Player'
+import Player from '../Player/Player'
 import SpotifyWebApi from 'spotify-web-api-node'
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
 })
+
+/* TODO:
+      1. Correct fonts
+      2. update for mobile
+      3. draggability
+      4. slider
+      5. unify component style
+*/
 
 const PlaylistCustomizer = ({ token }) => {
   const defaultPlaylistName = 'test'
@@ -29,11 +36,15 @@ const PlaylistCustomizer = ({ token }) => {
 
   const [targetElement, setTargetElement] = useState(null)
 
+  const [trackProgress, setTrackProgress] = useState(0)
+
   const [showSavedSongs, setShowSavedSongs] = useState(true)
 
   const [totalSaved, setTotalSaved] = useState(500)
 
   const [currentSongIndex, setCurrentSongIndex] = useState(0)
+
+  const [activeTab, setActiveTab] = useState('')
 
   const [item, setItem] = useState(
     {
@@ -142,6 +153,11 @@ const PlaylistCustomizer = ({ token }) => {
   //   }
   // }, [targetElement])
 
+  // const onChangeTrackProgress = (e) => {
+  //   setTrackProgress(e.target.value)
+  //   audioRef.current.currentTime = e.target.value
+  // }
+
   const handleSelectedSongs = (event) => {
     event.preventDefault()
     setShowSavedSongs(false)
@@ -149,6 +165,13 @@ const PlaylistCustomizer = ({ token }) => {
     setSelectedSongs(selectedSongs => [...selectedSongs, ...Array.from(event.target.song_line).filter(song => song.checked === true).map(song => JSON.parse(song.value))])
   }
 
+  // useEffect(() => {
+  //   if (selectedSongs.length > 0) setActiveTab(selectedSongs[currentSongIndex].name)
+  // }, [selectedSongs])
+
+  const updateActiveSong = (newSong) => {
+    setCurrentSongIndex(selectedSongs.indexOf(newSong))
+  }
   async function createPlaylist () {
     await spotifyApi.createPlaylist(userId,
       {
@@ -170,12 +193,6 @@ const PlaylistCustomizer = ({ token }) => {
   //     .then(response => { console.log(response); return (setProgress(response.progress_ms)) })
   // }
 
-  function toMinutesAndSeconds (millis) {
-    const minutes = Math.floor(millis / 60000)
-    const seconds = ((millis % 60000) / 1000).toFixed(0)
-    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
-  }
-
   const handleOnDragEnd = async (passed) => {
     if (!passed.destination) {
       console.log('failed')
@@ -183,7 +200,6 @@ const PlaylistCustomizer = ({ token }) => {
     }
     console.log('current song', selectedSongs[currentSongIndex].name)
     const currentSongName = selectedSongs[currentSongIndex].name
-    console.log('this is the current song name', currentSongName)
     // const ind = selectedSongs.findIndex(song => {
     //   return song.name === songName
     // })
@@ -195,12 +211,9 @@ const PlaylistCustomizer = ({ token }) => {
       return song.name === currentSongName
     })
     // if passed.source.name === selectedSongs.find(currentSongIndex)
-
     console.log('this is the new current song index', newCurrentSongIndex)
-    // if passed.destination.name === selectedSongs.find(currentSong)
     setSelectedSongs([...items])
 
-    // if selected songs is not updating in time setting the current song will mess shit up
     if (newCurrentSongIndex > 0) {
       console.log('setting current song index to ', newCurrentSongIndex)
       setCurrentSongIndex(newCurrentSongIndex)
@@ -232,44 +245,22 @@ const PlaylistCustomizer = ({ token }) => {
       {selectedSongs.length > 0
         ? (
           <div className={styles.container}>
-            <SongTabs skipToNext={skipToNext} handleOnDragEnd={handleOnDragEnd}>
-              {selectedSongs.map(
-                song => {
-                  return (
-                    <div key={song.id} label={song.name} id={song.id}>
-                      <h2 style={{ marginTop: '-16px', paddingBottom: '2px', borderBottom: '0px solid black', borderTop: '2px solid black', borderLeft: '2px solid black', borderRight: '2px solid black' }}>{song.name}</h2>
-                      <Table style={{ marginTop: '-10px' }} size='lg' responsive='lg' striped bordered hover variant='light'>
-                        <thead style={{ borderRight: '2px solid black', borderLeft: '2px solid black' }}>
-                          <tr>
-                            <th>Artist</th>
-                            <th>Popularity</th>
-                            <th>Duration</th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ borderRight: '2px solid black', borderLeft: '2px solid black' }}>
-                          <tr style={{ fontSize: '20px' }}>
-                            <td>{song.artists[0].name}</td>
-                            <td style={{ fontWeight: 'bold', color: 'rgb(255, 34, 225)' }}>{song.popularity}/100</td>
-                            <td>{toMinutesAndSeconds(song.duration_ms)} minutes</td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                    </div>
-                  )
-                }
-              )}
-            </SongTabs>
-            {/* TODO: create custom player to replace spotify player */}
-            <Player item={selectedSongs[currentSongIndex]} progressMs='1' isPlaying={false} />
-            {/* <SpotifyPlayer
-              key={selectedSongs.id}
-              token={token}
-              uris={selectedSongs.map((song, index) => {
-                console.log('current song index', currentSongIndex)
-                console.log(`${index}:`, song.name)
-                return song.uri
-              })}
-            /> */}
+            {/* TODO: TIME TRACKER PANEL LEFT OF SONGTABS */}
+            <SongTabs selectedSongs={selectedSongs} skipToNext={skipToNext} activeSong={selectedSongs[currentSongIndex]} updateActiveSong={updateActiveSong} handleOnDragEnd={handleOnDragEnd} />
+            {console.log('selectedSongs ', selectedSongs[currentSongIndex])}
+            <Player
+              title={selectedSongs[currentSongIndex].name}
+              album={selectedSongs[currentSongIndex].album}
+              artists={selectedSongs[currentSongIndex].artists}
+              duration={selectedSongs[currentSongIndex].duration_ms}
+              trackProgress={trackProgress}
+              onPlayPause={() => setIsPlaying(!isPlaying)}
+              isPlaying={isPlaying}
+              nextTrack={skipToNext}
+              selectedSongs={selectedSongs}
+              currentSongIndex={currentSongIndex}
+              prevTrack={skipToNext}
+            />
           </div>
 
           )

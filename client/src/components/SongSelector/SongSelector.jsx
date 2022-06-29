@@ -2,7 +2,7 @@ import { Form, Button, Modal, ModalBody, ModalFooter } from 'react-bootstrap'
 import { useState } from 'react'
 import style from './songselector.module.css'
 import { withTheme } from '@emotion/react'
-import '../index.scss'
+import '../../index.scss'
 
 export default function Songs ({ songs, reference, showSavedSongs, handleSelectedSongs }) {
   const [search, setSearch] = useState('')

@@ -1,5 +1,5 @@
-import Home from './components/Home'
-import Login from './components/Login'
+import Home from './components/Home/Home'
+import Login from './components/Login/Login'
 // import hash from './hash'
 import React, { useEffect, useState } from 'react'
 

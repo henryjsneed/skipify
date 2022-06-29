@@ -1,6 +1,9 @@
 .box {
   text-align: center;
-  position: relative;
+  /* position: relative; */
+  display:flex;
+  /* border: 10px solid blue; */
+  justify-content: center;
 }
 
 .localTopLevel {
@@ -16,21 +19,22 @@
   margin: 0;
   text-align: left;
   display:inline-block;
-  border-width: 200px;
-  /* border-bottom: 4px solid black; */
+  justify-content: center;
 }
 
 .dropZone {
   position: relative;
   display: flex;
-  top: 18px;
-  left: 10%;
+}
+
+.tabsTitle {
+  display:flex;
+  left: 20%;
+  justify-content: center;
+  
 }
 
 .table {
-  position: absolute;
-  /* top: 200px; */
-  /* margin-left: 410px; */
   text-align: center;
   width: 41.4%;
 }

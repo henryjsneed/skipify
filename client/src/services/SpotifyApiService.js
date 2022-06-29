@@ -41,7 +41,7 @@ const makePlaylist = async (userId, playlistName) => {
   spotifyApi.createPlaylist(userId,
     {
       name: playlistName,
-      description: 'twhatever',
+      description: 'test',
       public: true
     })
     .then((response) => {
