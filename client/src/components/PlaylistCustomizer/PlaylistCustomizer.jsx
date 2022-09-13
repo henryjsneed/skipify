@@ -220,6 +220,30 @@ const PlaylistCustomizer = ({ token }) => {
     }
   }
 
+  const handlePlayPause = async () => {
+    if (isPlaying) {
+      spotifyApi.getMyCurrentPlaybackState().then(response => {
+        setTrackProgress(response.body.progress_ms)
+      })
+      setTrackProgress()
+      setIsPlaying(!isPlaying)
+      spotifyApi.pause()
+    } else {
+      setIsPlaying(!isPlaying)
+      const playOptions = {
+        uris: [selectedSongs[currentSongIndex].uri],
+        position_ms: trackProgress
+      }
+      await spotifyApi.play(playOptions).then(response => {
+        console.log('now playing')
+      })
+        .catch((err) => {
+          console.error(err)
+          console.error('ERROR: Error playing song')
+        })
+    }
+  }
+
   // function LoadingButton () {
   //   const handleClick = async () => {
   //     setLoading(true)
@@ -254,7 +278,7 @@ const PlaylistCustomizer = ({ token }) => {
               artists={selectedSongs[currentSongIndex].artists}
               duration={selectedSongs[currentSongIndex].duration_ms}
               trackProgress={trackProgress}
-              onPlayPause={() => setIsPlaying(!isPlaying)}
+              onPlayPause={handlePlayPause}
               isPlaying={isPlaying}
               nextTrack={skipToNext}
               selectedSongs={selectedSongs}

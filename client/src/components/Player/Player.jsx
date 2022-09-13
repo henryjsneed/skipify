@@ -74,7 +74,7 @@ const Player = ({
         </div>
         <div className={classnames(style.audio_controls)}>
           <button onClick={prevTrack}>
-            <FaFastBackward />
+            <FaFastBackward size={20} />
             {/* <img src={prevIcon} /> */}
           </button>
           <div className={style.play_pause_btn}>
@@ -93,7 +93,7 @@ const Player = ({
             </button>
           </div>
           <button onClick={nextTrack}>
-            <FaFastForward />
+            <FaFastForward size={20} />
             {/* <img src={nextIcon} /> */}
           </button>
         </div>
