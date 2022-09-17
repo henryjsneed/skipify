@@ -12,9 +12,11 @@ const spotifyApi = new SpotifyWebApi({
 /* TODO:
       1. Correct fonts
       2. update for mobile
-      3. draggability
+      3. Fix dragging glitch
       4. slider
       5. unify component style
+      6. Fix stats table component
+      7. Add randomly generated dynamic color scheme
 */
 
 const PlaylistCustomizer = ({ token }) => {
@@ -56,7 +58,7 @@ const PlaylistCustomizer = ({ token }) => {
       duration_ms: 0
     })
 
-  const [isPlaying, setIsPlaying] = useState('Paused')
+  const [isPlaying, setIsPlaying] = useState(false)
   const [progressMs, setProgressMs] = useState(0)
   const [no_data, setNoData] = useState(false)
 
@@ -89,7 +91,7 @@ const PlaylistCustomizer = ({ token }) => {
   }, [token])
 
   useEffect(() => {
-    console.log('PlaylistCustomizer rendered')
+    // console.log('PlaylistCustomizer rendered')
   })
 
   async function getUserId () {
@@ -120,31 +122,51 @@ const PlaylistCustomizer = ({ token }) => {
     setRetrievedSongs(true)
   }
 
-  const skipToNext = async (songName) => {
-    const ind = selectedSongs.findIndex(song => {
-      return song.name === songName
-    })
-
-    console.log('index of song to skip to', ind)
-    console.log('current index recorded', currentSongIndex)
-    const index = ind - currentSongIndex
-    console.log('skip this many times', index)
-    await spotifyApi.setVolume(0.0)
-    // const index = numberToSkip - currentSongIndex
-    const idx = Math.abs(index)
-    if (index > 0) {
-      for (let i = 0; i < idx; i++) {
-        await spotifyApi.setVolume(0.0)
-        await spotifyApi.skipToNext()
-      }
-    } else {
-      for (let i = 0; i < idx; i++) {
-        await spotifyApi.setVolume(0.0)
-        await spotifyApi.skipToPrevious()
-      }
+  const playNewSongFromSelected = async (newSongIndex) => {
+    setCurrentSongIndex(newSongIndex)
+    setTrackProgress(0)
+    setIsPlaying(true)
+    const playOptions = {
+      uris: [selectedSongs[newSongIndex].uri],
+      position_ms: 0
     }
-    await spotifyApi.setVolume(100)
-    setCurrentSongIndex(ind)
+    await spotifyApi.play(playOptions).then(response => {
+      console.log('now playing')
+    })
+      .catch((err) => {
+        console.error(err)
+        console.error('ERROR: Error playing song')
+      })
+  }
+
+  const skipToNext = async () => {
+    let newSongIndex
+    if (currentSongIndex === selectedSongs.length - 1) {
+      newSongIndex = 0
+    } else {
+      newSongIndex = currentSongIndex + 1
+    }
+    playNewSongFromSelected(newSongIndex)
+  }
+
+  const skipToPrev = async () => {
+    let newSongIndex
+    if (currentSongIndex === 0) {
+      newSongIndex = selectedSongs.length - 1
+    } else {
+      newSongIndex = currentSongIndex - 1
+    }
+    playNewSongFromSelected(newSongIndex)
+  }
+
+  const updateActiveSong = async (newSong) => {
+    console.log('this is selected songs array:', selectedSongs)
+    setIsPlaying(true)
+
+    console.log('active index updated to ', selectedSongs.indexOf(newSong))
+    setTrackProgress(0)
+    const newSongIndex = selectedSongs.indexOf(newSong)
+    playNewSongFromSelected(newSongIndex)
   }
 
   // useEffect(() => {
@@ -169,9 +191,6 @@ const PlaylistCustomizer = ({ token }) => {
   //   if (selectedSongs.length > 0) setActiveTab(selectedSongs[currentSongIndex].name)
   // }, [selectedSongs])
 
-  const updateActiveSong = (newSong) => {
-    setCurrentSongIndex(selectedSongs.indexOf(newSong))
-  }
   async function createPlaylist () {
     await spotifyApi.createPlaylist(userId,
       {
@@ -200,24 +219,15 @@ const PlaylistCustomizer = ({ token }) => {
     }
     console.log('current song', selectedSongs[currentSongIndex].name)
     const currentSongName = selectedSongs[currentSongIndex].name
-    // const ind = selectedSongs.findIndex(song => {
-    //   return song.name === songName
-    // })
-
     const items = selectedSongs.slice()
     const [reorderedItem] = items.splice(passed.source.index, 1)
     items.splice(passed.destination.index, 0, reorderedItem)
     const newCurrentSongIndex = items.findIndex(song => {
       return song.name === currentSongName
     })
-    // if passed.source.name === selectedSongs.find(currentSongIndex)
-    console.log('this is the new current song index', newCurrentSongIndex)
     setSelectedSongs([...items])
-
-    if (newCurrentSongIndex > 0) {
-      console.log('setting current song index to ', newCurrentSongIndex)
-      setCurrentSongIndex(newCurrentSongIndex)
-    }
+    console.log('setting current song index to ', newCurrentSongIndex)
+    setCurrentSongIndex(newCurrentSongIndex)
   }
 
   const handlePlayPause = async () => {
@@ -271,7 +281,7 @@ const PlaylistCustomizer = ({ token }) => {
           <div className={styles.container}>
             {/* TODO: TIME TRACKER PANEL LEFT OF SONGTABS */}
             <SongTabs selectedSongs={selectedSongs} skipToNext={skipToNext} activeSong={selectedSongs[currentSongIndex]} updateActiveSong={updateActiveSong} handleOnDragEnd={handleOnDragEnd} />
-            {console.log('selectedSongs ', selectedSongs[currentSongIndex])}
+            {console.log('selectedSong object: ', selectedSongs[currentSongIndex])}
             <Player
               title={selectedSongs[currentSongIndex].name}
               album={selectedSongs[currentSongIndex].album}
@@ -283,7 +293,7 @@ const PlaylistCustomizer = ({ token }) => {
               nextTrack={skipToNext}
               selectedSongs={selectedSongs}
               currentSongIndex={currentSongIndex}
-              prevTrack={skipToNext}
+              prevTrack={skipToPrev}
             />
           </div>
 

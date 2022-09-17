@@ -27,15 +27,11 @@ export default function SongTabs ({ selectedSongs, activeSong, updateActiveSong,
     <div className={style.box}>
       <div className={style.dropZone}>
         <DragDropContext onDragEnd={handleOnDragEnd}>
-
           <Droppable droppableId='listItems'>
-
             {(provided) => (
               <>
-
                 <ul className={style.tabs} {...provided.droppableProps} ref={provided.innerRef}>
                   <h1 className={style.tabsTitle}>Lineup</h1>
-
                   {selectedSongs.map((song, index) => {
                     return (
                       <Draggable key={song.id} draggableId={song.name} index={index}>
