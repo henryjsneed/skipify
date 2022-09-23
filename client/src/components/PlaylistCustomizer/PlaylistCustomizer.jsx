@@ -15,8 +15,7 @@ const spotifyApi = new SpotifyWebApi({
       3. Fix dragging glitch
       4. slider
       5. unify component style
-      6. Fix stats table component
-      7. Add randomly generated dynamic color scheme
+      6. Add randomly generated dynamic color scheme
 */
 
 const PlaylistCustomizer = ({ token }) => {

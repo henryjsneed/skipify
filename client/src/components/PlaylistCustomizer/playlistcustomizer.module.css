@@ -4,6 +4,5 @@
   border: 18px;
   border-radius: .5%;
   background-color:rgb(228, 228, 228);
-  border: 16px solid transparent;
-  border-image: linear-gradient(to bottom,rgb(255, 184, 236), rgb(8, 3, 6)) 30;
+  background-image: linear-gradient(to top, #FFF 0%, #77aaff);
 }

@@ -1,17 +1,8 @@
 .box {
   text-align: center;
-  /* position: relative; */
   display:flex;
-  /* border: 10px solid blue; */
   justify-content: center;
 }
-
-.localTopLevel {
-  border: 1px solid white;
-}
-/* .top { 
-  composes: localTopLevel;
- } */
 
 .tabs {
   list-style: none;
@@ -25,13 +16,24 @@
 .dropZone {
   position: relative;
   display: flex;
+  background-color: white;
+  border-radius: 2px;
+  margin-right:10px;
+  padding: 10px;
+  width:100%;
+  border: 1px solid black;
+  box-shadow:  -1px 1px black,
+       -2px 2px black,
+       -3px 3px black,
+       -4px 4px black,
+       -5px 5px black;
 }
 
 .tabsTitle {
   display:flex;
   left: 20%;
   justify-content: center;
-  
+  /* font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;   */
 }
 
 .table {
@@ -42,34 +44,51 @@
 .tabs > li {
   padding: 0.5em 1em;
   margin: 0 1em; 
-  /* this transform is causing the unpleasant shifting. Maybe increase container space inside, create fixed everything? */
-  transition: transform 430ms;
+  margin-bottom: 8px;
+  
+  /* increase inner container space or remove transition*/
+  /* consider differentiating between styles based on whether on click event has occurred vs hover*/
+  transition: transform 210ms;
   text-align: center; 
+  border: 1px solid black;
+  position: relative;
+  box-shadow:  -1px 1px black,
+       -2px 2px black,
+       -3px 3px black,
+       -4px 4px black,
+       -5px 5px black;
    /* https://github.com/atlassian/react-beautiful-dnd/issues/128 */
 }
 
 .tabs > li:hover {
-  transform: scale(1.15);
-  border-right: 2px solid black;
-  border-left: 2px solid black;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  /* This increase in padding is throwing off below elements */
-  border-bottom: 5px solid black;
-  border-top: 2px solid black;
+  transform: scale(1.2);
+
+  border: 1px solid black;
+  position: relative;
+  box-shadow:  -1px 1px black,
+       -2px 2px black,
+       -3px 3px black,
+       -4px 4px black,
+       -5px 5px black;
+}
+
+.backlog {
+  background-color:white;
+  z-index:2;
+  color: black;
 }
 
 .current {
-  border-right: 2px solid black;
-  border-left: 2px solid black;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom: 5px solid black;
-  border-top: 2px solid black;
+  background-color: white;
+  border: 1px solid black;
+  z-index:100;
+  color: #77aaff;
+  box-shadow:  -1px 1px black,
+       -2px 2px black,
+       -3px 3px black,
+       -4px 4px black,
+       -5px 5px black;
+       
 }
 
 .content {
@@ -78,8 +97,8 @@
 
 .links {
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
 .links:hover {
-  color: rgb(255, 34, 225);
+  color: 77aaff;
 }

@@ -1,7 +1,6 @@
 import style from './player.module.css'
-import { FaPlay, FaPause, FaFastForward, FaFastBackward } from 'react-icons/fa'
+import { FaPlay, FaPause, FaForward, FaBackward } from 'react-icons/fa'
 import classnames from 'classnames'
-import { Table } from 'react-bootstrap'
 
 const Player = ({
   title,
@@ -31,7 +30,6 @@ const Player = ({
   }
 
   const currentProgress = (trackProgress / duration) * 100
-  const trackProgressStyling = `linear-gradient(to right, #ffffff ${currentProgress}%, grey ${currentProgress}%)`
 
   return (
     <div className={style.player__container}>
@@ -43,22 +41,22 @@ const Player = ({
         <div className={style.now_playing__artist}>
           {album.name}
         </div>
-        <Table style={{ marginTop: '-10px' }} size='lg' responsive='lg' striped bordered hover variant='light'>
-          <thead style={{ borderRight: '2px solid black', borderLeft: '2px solid black' }}>
+        <table className={style.stats_table}>
+          <thead className={style.stats_table_header}>
             <tr>
-              <th>Artist</th>
-              <th>Popularity</th>
-              <th>Duration</th>
+              <th style={{ borderRight: '2px solid black', borderBottom: '0px solid black' }}>Artist</th>
+              <th style={{ borderRight: '2px solid black' }}>Popularity</th>
+              <th style={{ borderBottom: '0px solid black' }}>Duration</th>
             </tr>
           </thead>
-          <tbody style={{ borderRight: '2px solid black', borderLeft: '2px solid black' }}>
-            <tr style={{ fontSize: '20px' }}>
-              <td>{selectedSongs[currentSongIndex].artists[0].name}</td>
-              <td style={{ fontWeight: 'bold', color: 'rgb(255, 34, 225)' }}>{selectedSongs[currentSongIndex].popularity}/100</td>
+          <tbody className={style.stats_table_body}>
+            <tr className={style.stats_table_body_row}>
+              <td style={{ borderRight: '2px solid black' }}>{selectedSongs[currentSongIndex].artists[0].name}</td>
+              <td style={{ borderRight: '2px solid black' }}>{selectedSongs[currentSongIndex].popularity}/100</td>
               <td>{toMinutesAndSeconds(selectedSongs[currentSongIndex].duration_ms)} minutes</td>
             </tr>
           </tbody>
-        </Table>
+        </table>
         <div className={style.now_playing__status} />
 
         <div className={style.audio_player_progress}>
@@ -69,32 +67,24 @@ const Player = ({
             max={duration || 0}
             value={trackProgress}
             onChange={onChangeTrackProgress}
-            style={{ background: trackProgressStyling }}
           />
         </div>
         <div className={classnames(style.audio_controls)}>
           <button onClick={prevTrack}>
-            <FaFastBackward size={20} />
-            {/* <img src={prevIcon} /> */}
+            <FaBackward size={20} />
           </button>
           <div className={style.play_pause_btn}>
             <button onClick={onPlayPause}>
               {isPlaying
                 ? (
                   <FaPause />
-                  // <img style={{ marginTop: '5px' }} src={pauseBlackIcon} />
                   )
                 : (<FaPlay />
-                  // <img
-                  //   style={{ marginLeft: '5px', marginTop: '5px' }}
-                  //   src={playBlackIcon}
-                  // />
                   )}
             </button>
           </div>
           <button onClick={nextTrack}>
-            <FaFastForward size={20} />
-            {/* <img src={nextIcon} /> */}
+            <FaForward size={20} />
           </button>
         </div>
 

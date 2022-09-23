@@ -9,6 +9,8 @@ client/package-lock.json
 /.pnp
 .pnp.js
 
+client/.vscode
+
 notes.md
 
 # testing

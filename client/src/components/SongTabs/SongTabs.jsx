@@ -37,7 +37,7 @@ export default function SongTabs ({ selectedSongs, activeSong, updateActiveSong,
                       <Draggable key={song.id} draggableId={song.name} index={index}>
                         {(provided) => (
                           <li
-                            className={song.name === activeSong.name ? style.current : ''}
+                            className={song.name === activeSong.name ? style.current : style.backlog}
                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
                           >
                             <a href='#' className={style.links} onClick={e => handleClick(e, song)}>
