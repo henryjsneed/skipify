@@ -11,7 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 
 /* TODO:
       1. Correct fonts
-      2. update for mobile
+      2. adapt for mobile
       3. Fix dragging glitch
       4. slider
       5. unify component style
@@ -272,7 +272,7 @@ const PlaylistCustomizer = ({ token }) => {
   //   )
   // }
   return (
-    <div>
+    <>
       {retrievedSongs ? <Songs showSavedSongs={showSavedSongs} reference={setTargetElement} songs={savedSongs} handleSelectedSongs={handleSelectedSongs} /> : <></>}
 
       {selectedSongs.length > 0
@@ -298,7 +298,7 @@ const PlaylistCustomizer = ({ token }) => {
 
           )
         : null}
-    </div>
+    </>
   )
 }
 

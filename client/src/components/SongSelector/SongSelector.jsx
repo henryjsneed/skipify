@@ -2,7 +2,7 @@ import { Form, Button, Modal, ModalBody, ModalFooter } from 'react-bootstrap'
 import { useState } from 'react'
 import style from './songselector.module.css'
 import { withTheme } from '@emotion/react'
-import '../../index.scss'
+// import '../../index.scss'
 
 export default function Songs ({ songs, reference, showSavedSongs, handleSelectedSongs }) {
   const [search, setSearch] = useState('')
@@ -18,11 +18,11 @@ export default function Songs ({ songs, reference, showSavedSongs, handleSelecte
   )
 
   return (
-    <div className={style.song_modal}>
-      <Modal show={showSavedSongs} size='lg'>
+    <div className={style.song_modal_parent}>
+      <Modal show={showSavedSongs} size='lg' className={style.song_modal}>
         <Form
           onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault() }}
-          className={style.form}
+          className={style.song_modal_form}
           onSubmit={handleSelectedSongs}
         >
           {/* <Modal.Header size='sm'>
@@ -40,7 +40,7 @@ export default function Songs ({ songs, reference, showSavedSongs, handleSelecte
               />
             </form>
           </div>
-          <ModalBody className={style.song_modal_body}>
+          <ModalBody className={style.song_modal_body} style={{ maxHeight: window.innerHeight * 0.6 }}>
 
             <Form.Group className={style.song_form_group}>
               {/* <Form.Control
@@ -66,7 +66,7 @@ export default function Songs ({ songs, reference, showSavedSongs, handleSelecte
 
           </ModalBody>
           <ModalFooter className={style.song_modal_footer}>
-            <Button variant='outline-dark' type='submit'>Submit</Button>
+            <Button type='submit' className={style.modal_submit_button}>Submit</Button>
           </ModalFooter>
         </Form>
 
