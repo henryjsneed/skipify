@@ -2,7 +2,6 @@ import { Form, Button, Modal, ModalBody, ModalFooter } from 'react-bootstrap'
 import { useState } from 'react'
 import style from './songselector.module.css'
 import { withTheme } from '@emotion/react'
-// import '../../index.scss'
 
 export default function Songs ({ songs, reference, showSavedSongs, handleSelectedSongs }) {
   const [search, setSearch] = useState('')
@@ -29,12 +28,12 @@ export default function Songs ({ songs, reference, showSavedSongs, handleSelecte
           <center><Form.Label htmlFor='exampleColorInput' style={headerStyle}>Select Songs</Form.Label></center>
         </Modal.Header> */}
           <div className={style.song_search}>
-            <h1 className={style.song_text}>Choose songs</h1>
-            <form className={style.song_form}>
+            <h1 className={style.song_search_title}>Choose songs</h1>
+            <form className={style.song_search_form}>
               <input
                 type='text'
                 placeholder='Search'
-                className={style.song_input}
+                className={style.song_search_input_box}
                 onChange={handleChange}
                 onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault() }}
               />
@@ -66,7 +65,7 @@ export default function Songs ({ songs, reference, showSavedSongs, handleSelecte
 
           </ModalBody>
           <ModalFooter className={style.song_modal_footer}>
-            <Button type='submit' className={style.modal_submit_button}>Submit</Button>
+            <Button type='submit' className={style.modal_submit_button}></Button>
           </ModalFooter>
         </Form>
 

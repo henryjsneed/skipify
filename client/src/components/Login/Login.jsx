@@ -1,10 +1,10 @@
 import style from './login.module.css'
 import logo from '../../assets/Spotify_Logo_RGB_White.png'
 import icon from '../../assets/Spotify_Icon_RGB_White.png'
-import { authEndpoint, scopes } from '../../config'
+import { authEndpoint, scopes, clientId, redirectUri } from '../../config'
 
 const Login = (token) => {
-  const AUTH_URL = `${authEndpoint}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=${scopes.join('%20')}&response_type=code&show_dialog=true`
+  const AUTH_URL = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=code&show_dialog=true`
   return (
     <div className={style.page}>
       <nav className={style.navbar}>

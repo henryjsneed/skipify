@@ -9,64 +9,22 @@
 
 .song_modal {
   background-color: black;
+  max-width:42%;
+  position: absolute;
+  left:27%;
+  bottom: 5%;
+  
 }
 
 .song_checks {
-  /* color: black; */
   background-color: white;
   font-family: Arial;
   font-size: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
-  
-
-/* 
-  width: 1em;
-  height: 1em;
-  margin-top: 0.25em;
-  vertical-align: top;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  appearance: none; */
-  /* -webkit-print-color-adjust: exact; */
 }
 
-/* .song_checks input { */
-  /* width: 30px; */
-  
-  /* color: green;
-  background-color: red;
-  width: 1em;
-  height: 1em;
-  margin-top: 0.25em;
-  vertical-align: top;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  appearance: none; */
-  /* -webkit-print-color-adjust: exact; */
-  
-/* }  */
-
 .song_checks input {
-  /* width: 30px; */
-  
-  /* display: grid;
-  grid-template-columns: 1em auto;
-  gap: 0.5em; */
-  /* font-size: 20rem;
-  font-weight: bold;
-  line-height: 30px; */
-  
-  /* -webkit-appearance: none; */
-  /* appearance: none; */
-  /* appearance: none; */
-
   padding: 10px;
   appearance:none;
   background-color: white;
@@ -77,14 +35,20 @@
   color: currentColor;
   width: 1em;
   height: 1em;
-  border: 0.15em solid currentColor;
+  border: 3px solid currentColor;
   border-radius: 0.10em;
   transform: translateY(-0.075em);
   place-content: center;
   transition: 80ms transform ease-in-out;
-
-  
 }
+
+.song_checks input:hover {
+  background-image: linear-gradient(
+    -225deg,
+    #ac32d4 0%,
+    #7918f2 48%,
+    #4801ff 100%
+  );}
 
 .song_checks input:checked::before {
   content: "";
@@ -96,18 +60,32 @@
 }
 
 .song_checks input:checked {
-  background-color: #7918f2;
+  background-image: linear-gradient(
+    -225deg,
+    #ac32d4 0%,
+    #7918f2 48%,
+    #4801ff 100%
+  );
+  
   transition: 135ms transform ease-in-out;
-  border: 0.10em solid currentColor;
+  border: 3px solid currentColor;
 
   transform: scale(.7)
 }
 
 .modal_submit_button {
   align-items: center;
-  background-color: #fee6e3;
-  border: 2px solid #111;
-  border-radius: 8px;
+  left:10.5%;
+  top:18%;
+  /* background-color: rgb(72, 0, 255); */
+  background-image: linear-gradient(
+    -225deg,
+    #ac32d4 0%,
+    #7918f2 48%,
+    #4801ff 100%
+  );
+  border: 3px solid #111;
+  border-radius: 3px;
   box-sizing: border-box;
   color: #111;
   cursor: pointer;
@@ -117,7 +95,7 @@
   height: 48px;
   justify-content: center;
   line-height: 24px;
-  max-width: 100%;
+  width: 80%;
   padding: 0 25px;
   position: relative;
   text-align: center;
@@ -129,20 +107,20 @@
 
 .modal_submit_button:after {
   background-color: #111;
-  border-radius: 8px;
+  border-radius: 3px;
   content: "";
   display: block;
   height: 48px;
   left: 0;
   width: 100%;
-  position: absolute;
-  top: -2px;
+  top: -2.6px;
   transform: translate(8px, 8px);
   transition: transform .2s ease-out;
-  z-index: -1;
+  position: absolute;
+  z-index:-1;
 }
 
-.modal_submit_button:hover:after {
+.modal_submit_button:hover::after {
   transform: translate(0, 0);
 }
 .modal_submit_button:active {
@@ -160,65 +138,70 @@
   }
 }
 
-/* .song_checks input::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--form-control-color);
-} */
-/* 
-.song_checks input:checked::before {
-  transform: scale(1);
-} */
-
 .song_checks label {
-  background-color: white;
-}
-.song_form {
   background-color: white;
 }
 
 .song_form_group {
   background-color: white;
+  
 }
 
 .song_modal_form {
-  border-radius: 4px;
+  border-radius: 5px;
   padding: 3px;
+  
   background-color:white;
 }
 
 .song_modal_body {
   overflow: scroll;
-  /* max-height: 700px; */
-  background-color: white;
-}
-.song_modal_footer {
+  max-height: 700px;
   background-color: white;
 }
 
+.song_modal_footer {
+  height: 72px;
+  z-index:1;
+  position:relative;
+  background-color: white;
+}
+
+
+/* Song Search Input */
 .song_search {
   background-color: white;
   margin-bottom: 64px;
-  display: flex;
-  flex-direction: column;
+  display: absolute;
+  margin-left: 0%;
   justify-content: center;
-  align-items: center;
+  text-align: center;
+  align-items: center; 
 }
-
-.song_text {
+.song_search_title {
   background-color: white;
   margin-bottom: 32px;
+  border: 2px solid black;
+  box-shadow:  -1px 1px black,
+       -2px 2px black,
+       -3px 3px black,
+       -4px 4px black,
+       -5px 5px black;
   margin-top: 30px;
-  font-weight: 530;
-  text-align: center;
+  width:80%;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-left:10%;
+  font-weight: 545;
+  font-size: 40px;
 }
-
-.song_input {
+.song_search_form {
+  background-color: white;
+  z-index:-100;
+}
+.song_search_input_box {
   padding-left: 16px;
-  width: 300px;
+  margin-left:-9px;
+  width: 80%;
   height: 50px;
   border-radius: 4px;
   border:none;
@@ -230,7 +213,6 @@
   );
   color: #e2e2e2;
 }
-
-.song_input::placeholder {
+.song_search_input_box::placeholder {
   color: #e2e2e2;
 }

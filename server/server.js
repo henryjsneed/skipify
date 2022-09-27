@@ -4,23 +4,19 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import dotenv from 'dotenv'
 
 const app = express()
-console.log(dotenv.config())
-
+dotenv.config()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 const PORT = 3001
 
 app.post('/login', async (req, res) => {
   const { code } = req.body
-
   const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET
   })
-
   try {
     const x = await spotifyApi.authorizationCodeGrant(code)
     const {
@@ -41,7 +37,6 @@ app.post('/refresh', async (req, res) => {
     clientSecret: process.env.CLIENT_SECRET,
     refreshToken
   })
-
   try {
     const {
       body: { access_token, expires_in }
