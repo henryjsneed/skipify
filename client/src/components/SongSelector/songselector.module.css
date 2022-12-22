@@ -1,32 +1,55 @@
-.song_modal_parent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+
+.songs {
   background-color: black;
-  margin-top: 64px;
-  color: #fff;
+  position: absolute;
+  left:7%;
+  bottom: 5%;
 }
 
-.song_modal {
-  background-color: black;
-  max-width:42%;
-  position: absolute;
-  left:27%;
-  bottom: 5%;
-  
+/* .song_check_input {
+  box-sizing: border-box;
+  margin: 0;
+  scroll-behavior: smooth;
+  padding: 10px;
+  appearance: none;
+  background-color: red;
+  margin-bottom: -6px;
+  margin-right: 10px;
+  margin-left: 10px;
+  font: inherit;
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+  border: 3px solid currentColor;
+  border-radius: 0.10em;
+  transform: translateY(-0.075em);
+  transition: 80ms transform ease-in-out;
+  background-image: linear-gradient(
+  -225deg,
+  #ac32d4 0%,
+  #7918f2 48%,
+  #4801ff 100%
+);
+} */
+
+.song_check_label {
+  font-size: 21px;
+  color: black;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Kumbh Sans', sans-serif;
+  scroll-behavior: smooth;
+  background-color: white;
 }
 
 .song_checks {
-  background-color: white;
-  font-family: Arial;
-  font-size: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.song_checks input {
+  /* box-sizing: border-box;
+  margin: 0;
+  scroll-behavior: smooth;
   padding: 10px;
-  appearance:none;
+  appearance: none;
   background-color: white;
   margin-bottom: -6px;
   margin-right: 10px;
@@ -38,7 +61,45 @@
   border: 3px solid currentColor;
   border-radius: 0.10em;
   transform: translateY(-0.075em);
-  place-content: center;
+  transition: 80ms transform ease-in-out;
+ */
+
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  margin-left: 5px;
+  background-color: none;
+  font-family: Arial;
+  font-size: 18px;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
+  /* margin-left: 50px;
+  background-color: white;
+  font-family: Arial;
+  font-size: 21px;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 10px; */
+}
+
+.song_checks input {
+  padding: 10px;
+  appearance:none;
+  background-color: white;
+  margin-bottom: -6px;
+  font: inherit;
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+  border: 3px solid black;
+  border-radius: 0.10em;
+  transform: translateY(-0.075em);
+  /* place-content: left; */
   transition: 80ms transform ease-in-out;
 }
 
@@ -68,14 +129,14 @@
   );
   
   transition: 135ms transform ease-in-out;
-  border: 3px solid currentColor;
+  border: 3px solid black;
 
   transform: scale(.7)
 }
 
-.modal_submit_button {
+.submit_button {
   align-items: center;
-  left:10.5%;
+  /* left:10.5%; */
   top:18%;
   /* background-color: rgb(72, 0, 255); */
   background-image: linear-gradient(
@@ -86,7 +147,7 @@
   );
   border: 3px solid #111;
   border-radius: 3px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   color: #111;
   cursor: pointer;
   display: flex;
@@ -95,7 +156,7 @@
   height: 48px;
   justify-content: center;
   line-height: 24px;
-  width: 80%;
+  width: 100%;
   padding: 0 25px;
   position: relative;
   text-align: center;
@@ -105,7 +166,7 @@
   touch-action: manipulation;
 }
 
-.modal_submit_button:after {
+.submit_button:after {
   background-color: #111;
   border-radius: 3px;
   content: "";
@@ -120,99 +181,95 @@
   z-index:-1;
 }
 
-.modal_submit_button:hover::after {
+.submit_button:hover::after {
   transform: translate(0, 0);
 }
-.modal_submit_button:active {
+.submit_button:active {
   background-color: #ffdeda;
   outline: 0;
 }
 
-.modal_submit_button:hover {
+.submit_button:hover {
   outline: 0;
 }
 
 @media (min-width: 768px) {
-  .modal_submit_button {
+  .submit_button {
     padding: 0 40px;
   }
 }
 
 .song_checks label {
-  background-color: white;
+  background-color: none;
+  padding-left: 10px;
 }
 
-.song_form_group {
-  background-color: white;
-  
+.song_form_group {  
+  color: #fff;
+  /* box-sizing: border-box; */
+  margin: 0;
+  padding: 0;
+  font-family: 'Kumbh Sans', sans-serif;
+  scroll-behavior: smooth;
+  background-color: black;
 }
 
-.song_modal_form {
+.song_form {
+  position: relative;
   border-radius: 5px;
   padding: 3px;
-  
-  background-color:white;
+  background-color:black;
+  float: left;
 }
 
-.song_modal_body {
+.song_body {
   overflow: scroll;
-  max-height: 700px;
-  background-color: white;
+  overflow-x:hidden;
+  background-color: black;
 }
 
-.song_modal_footer {
-  height: 72px;
-  z-index:1;
-  position:relative;
-  background-color: white;
-}
+.song_body::-webkit-scrollbar-track {
+  border-radius: 3px;
+  margin-left: 4.5px;
+  margin-left: 4.5px;
 
+  border: 1px solid none;
+  width: 40px;
+} 
 
-/* Song Search Input */
-.song_search {
-  background-color: white;
-  margin-bottom: 64px;
-  display: absolute;
-  margin-left: 0%;
-  justify-content: center;
-  text-align: center;
-  align-items: center; 
+.song_body::-webkit-scrollbar {
+  width: 30px;
+  background-color: black;
+  border-radius: 3px;
 }
-.song_search_title {
-  background-color: white;
-  margin-bottom: 32px;
-  border: 2px solid black;
-  box-shadow:  -1px 1px black,
-       -2px 2px black,
-       -3px 3px black,
-       -4px 4px black,
-       -5px 5px black;
-  margin-top: 30px;
-  width:80%;
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  margin-left:10%;
-  font-weight: 545;
-  font-size: 40px;
-}
-.song_search_form {
-  background-color: white;
-  z-index:-100;
-}
-.song_search_input_box {
-  padding-left: 16px;
-  margin-left:-9px;
-  width: 80%;
-  height: 50px;
-  border-radius: 4px;
-  border:none;
+.song_body::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  
   background-image: linear-gradient(
     -225deg,
     #ac32d4 0%,
     #7918f2 48%,
     #4801ff 100%
   );
-  color: #e2e2e2;
+  /* border: 5px solid blue; */
+  height:30px;
 }
-.song_search_input_box::placeholder {
-  color: #e2e2e2;
-}
+
+/**title**/
+/* .song_search_title {
+  background-color: orange;
+  margin-bottom: 32px;
+  border: 2px solid white;
+  box-shadow:  -1px 1px white,
+       -2px 2px white,
+       -3px 3px white,
+       -4px 4px white,
+       -5px 5px white;
+  margin-top: 30px;
+  width:80%;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-left:10%;
+  font-weight: 545;
+  font-size: 40px;
+} */
+

@@ -208,8 +208,8 @@ html {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  height: 90%;
-  text-align: center;
+  /* height: 90%; */
+  /* text-align: center; */
   padding: 30px;
 }
 

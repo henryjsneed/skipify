@@ -24,7 +24,7 @@ export default function SongTabs ({ selectedSongs, activeSong, updateActiveSong,
   // }, [activeTab])
 
   return (
-    <div className={style.box}>
+    <div className={style.box} style={{ height: window.innerHeight * 0.85 }}>
       <div className={style.dropZone}>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='listItems'>

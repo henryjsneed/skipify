@@ -1,9 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useContext, useRef, useEffect, useCallback } from 'react'
 import Songs from '../SongSelector/SongSelector'
 import SongTabs from '../SongTabs/SongTabs'
 import styles from './playlistcustomizer.module.css'
 import Player from '../Player/Player'
+import Search from '../Search/Search'
+import Navbar from '../Navbar/Navbar'
+import {
+  MatchText,
+  SearchProvider,
+  SearchContext,
+  SearchEventContext
+} from 'react-ctrl-f'
+import { Form, Button } from 'react-bootstrap'
 import SpotifyWebApi from 'spotify-web-api-node'
+import style from '../SongSelector/songselector.module.css'
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
@@ -210,6 +220,13 @@ const PlaylistCustomizer = ({ token }) => {
   //   await spotifyApi.getMyCurrentPlaybackState()
   //     .then(response => { console.log(response); return (setProgress(response.progress_ms)) })
   // }
+  const [search, setSearch] = useState('')
+
+  const handleChange = e => {
+    console.log('handle change call')
+    e.preventDefault()
+    if (e.keyCode !== 13 && e.key !== 'Enter' && e.key !== 13) setSearch(e.target.value)
+  }
 
   const handleOnDragEnd = async (passed) => {
     if (!passed.destination) {
@@ -252,6 +269,23 @@ const PlaylistCustomizer = ({ token }) => {
         })
     }
   }
+  const onCustomScroll = useCallback((id, fixedHeaderHeight) => {
+    const dom = document.getElementById(id)
+    if (dom) {
+      console.log('found', fixedHeaderHeight)
+      console.log(window.getBoundingClientRect)
+      // const topOfElement =
+      //   dom.getBoundingClientRect().bottom +
+      //   window.pageYOffset -
+      //   fixedHeaderHeight
+      // window.scroll({
+      //   top: topOfElement,
+      //   behavior: 'smooth'
+      // })
+      document.getElementById(id).scrollIntoView()
+      /// // document.getElementsByTagName(id).scrollIntoView()
+    }
+  }, [])
 
   // function LoadingButton () {
   //   const handleClick = async () => {
@@ -272,15 +306,36 @@ const PlaylistCustomizer = ({ token }) => {
   //   )
   // }
   return (
-    <>
-      {retrievedSongs ? <Songs showSavedSongs={showSavedSongs} reference={setTargetElement} songs={savedSongs} handleSelectedSongs={handleSelectedSongs} /> : <></>}
+    <div className={style.container}>
+      <Navbar />
+      <Form
+        style={{ width: window.innerWidth * 0.36 }}
+        onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault() }}
+        className={style.song_form}
+        onSubmit={handleSelectedSongs}
+      >
+        <SearchProvider value={{ fixedHeaderHeight: 90, onScroll: onCustomScroll }}>
+          {/* <h1 className={style.song_search_title}>________</h1> */}
+          <Search />
+          <div className={style.song_body}>
+            <Form.Group className={style.song_form_group} style={{ maxHeight: window.innerHeight * 0.8 }}>
+              <Songs showSavedSongs={showSavedSongs} reference={setTargetElement} songs={savedSongs} handleSelectedSongs={handleSelectedSongs} />
+            </Form.Group>
+            {/* <div ref={reference} /> */}
+          </div>
+          <div className={style.song_footer}>
+            <Button type='submit' className={style.submit_button} />
+          </div>
+        </SearchProvider>
+      </Form>
 
+      {/* TODO: TIME TRACKER PANEL LEFT OF SONGTABS */}
       {selectedSongs.length > 0
         ? (
-          <div className={styles.container}>
-            {/* TODO: TIME TRACKER PANEL LEFT OF SONGTABS */}
+          <>
             <SongTabs selectedSongs={selectedSongs} skipToNext={skipToNext} activeSong={selectedSongs[currentSongIndex]} updateActiveSong={updateActiveSong} handleOnDragEnd={handleOnDragEnd} />
             {console.log('selectedSong object: ', selectedSongs[currentSongIndex])}
+
             <Player
               title={selectedSongs[currentSongIndex].name}
               album={selectedSongs[currentSongIndex].album}
@@ -294,11 +349,10 @@ const PlaylistCustomizer = ({ token }) => {
               currentSongIndex={currentSongIndex}
               prevTrack={skipToPrev}
             />
-          </div>
-
+          </>
           )
-        : null}
-    </>
+        : <></>}
+    </div>
   )
 }
 

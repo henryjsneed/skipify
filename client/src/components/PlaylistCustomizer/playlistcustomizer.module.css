@@ -1,8 +1,5 @@
 .container {
-  padding: 40px;
   display:flex;
-  border: 18px;
-  border-radius: .5%;
-  background-color:rgb(228, 228, 228);
-  background-image: linear-gradient(to top, #FFF 0%, #77aaff);
+  position: relaitve;
+  background-color: red;
 }
