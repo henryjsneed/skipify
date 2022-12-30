@@ -3,3 +3,14 @@
   position: relaitve;
   background-color: red;
 }
+
+.now_playing_img {
+  /* justify-content: center; */
+  display: flex;  
+  float:left;
+  margin-top: 10px;
+  border:none;
+  padding:0px;
+  max-height: 500px;
+  /* border: 3px solid red; */
+}

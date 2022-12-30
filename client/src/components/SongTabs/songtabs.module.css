@@ -2,7 +2,8 @@
   text-align: center;
   display:flex;
   justify-content: center;
-  float: left;
+  background-color: black;
+  float: right;
 }
 
 .tabs {
@@ -17,23 +18,26 @@
 .dropZone {
   position: relative;
   display: flex;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 2px;
   margin-right:10px;
   padding: 10px;
   width:100%;
-  border: 1px solid black;
-  box-shadow:  -1px 1px black,
-       -2px 2px black,
-       -3px 3px black,
-       -4px 4px black,
-       -5px 5px black;
+  /* border: 1px solid white;
+  box-shadow:  -1px 1px white,
+       -2px 2px white,
+       -3px 3px white,
+       -4px 4px white,
+       -5px 5px white; */
 }
 
 .tabsTitle {
   display:flex;
   left: 20%;
+  top: 3px;
+  margin-bottom: 10px;
   justify-content: center;
+  color: white;
   /* font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;   */
 }
 
@@ -46,31 +50,38 @@
   padding: 0.5em 1em;
   margin: 0 1em; 
   margin-bottom: 8px;
-  
+  /* background-image: linear-gradient(
+    -225deg,
+    #ac32d4 0%,
+    #7918f2 48%,
+    #4801ff 100%
+  ); */
+  background-color: black;
   /* increase inner container space or remove transition*/
   /* consider differentiating between styles based on whether on click event has occurred vs hover*/
   transition: transform 210ms;
   text-align: center; 
-  border: 1px solid black;
+  border: 1px solid white;
+  color: white;
   position: relative;
-  box-shadow:  -1px 1px black,
-       -2px 2px black,
-       -3px 3px black,
-       -4px 4px black,
-       -5px 5px black;
+  box-shadow:  -1px 1px white,
+       -2px 2px white,
+       -3px 3px white,
+       -4px 4px white,
+       -5px 5px white;
    /* https://github.com/atlassian/react-beautiful-dnd/issues/128 */
 }
 
 .tabs > li:hover {
   transform: scale(1.2);
 
-  border: 1px solid black;
+  border: 1px solid white;
   position: relative;
-  box-shadow:  -1px 1px black,
-       -2px 2px black,
-       -3px 3px black,
-       -4px 4px black,
-       -5px 5px black;
+  box-shadow:  -1px 1px white,
+       -2px 2px white,
+       -3px 3px white,
+       -4px 4px white,
+       -5px 5px white;
 }
 
 .backlog {

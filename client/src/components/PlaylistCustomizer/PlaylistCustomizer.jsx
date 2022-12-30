@@ -189,11 +189,13 @@ const PlaylistCustomizer = ({ token }) => {
   //   audioRef.current.currentTime = e.target.value
   // }
 
+  // slider()
+
   const handleSelectedSongs = (event) => {
     event.preventDefault()
     setShowSavedSongs(false)
     // console.log('event', event.target.song_line._valueTracker._wrapperState.initialValue.track.name)
-    setSelectedSongs(selectedSongs => [...selectedSongs, ...Array.from(event.target.song_line).filter(song => song.checked === true).map(song => JSON.parse(song.value))])
+    setSelectedSongs(selectedSongs => [...Array.from(event.target.song_line).filter(song => song.checked === true).map(song => JSON.parse(song.value))])
   }
 
   // useEffect(() => {
@@ -272,18 +274,7 @@ const PlaylistCustomizer = ({ token }) => {
   const onCustomScroll = useCallback((id, fixedHeaderHeight) => {
     const dom = document.getElementById(id)
     if (dom) {
-      console.log('found', fixedHeaderHeight)
-      console.log(window.getBoundingClientRect)
-      // const topOfElement =
-      //   dom.getBoundingClientRect().bottom +
-      //   window.pageYOffset -
-      //   fixedHeaderHeight
-      // window.scroll({
-      //   top: topOfElement,
-      //   behavior: 'smooth'
-      // })
-      document.getElementById(id).scrollIntoView()
-      /// // document.getElementsByTagName(id).scrollIntoView()
+      document.getElementById(id).scrollIntoView({ block: 'center' })
     }
   }, [])
 
@@ -309,16 +300,16 @@ const PlaylistCustomizer = ({ token }) => {
     <div className={style.container}>
       <Navbar />
       <Form
-        style={{ width: window.innerWidth * 0.36 }}
+        style={{ width: window.innerWidth * 0.30 }}
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault() }}
         className={style.song_form}
         onSubmit={handleSelectedSongs}
       >
-        <SearchProvider value={{ fixedHeaderHeight: 90, onScroll: onCustomScroll }}>
+        <SearchProvider value={{ fixedHeaderHeight: 900, onScroll: onCustomScroll }}>
           {/* <h1 className={style.song_search_title}>________</h1> */}
           <Search />
           <div className={style.song_body}>
-            <Form.Group className={style.song_form_group} style={{ maxHeight: window.innerHeight * 0.8 }}>
+            <Form.Group className={style.song_form_group} style={{ maxHeight: window.innerHeight * 0.79 }}>
               <Songs showSavedSongs={showSavedSongs} reference={setTargetElement} songs={savedSongs} handleSelectedSongs={handleSelectedSongs} />
             </Form.Group>
             {/* <div ref={reference} /> */}
@@ -332,7 +323,9 @@ const PlaylistCustomizer = ({ token }) => {
       {/* TODO: TIME TRACKER PANEL LEFT OF SONGTABS */}
       {selectedSongs.length > 0
         ? (
-          <>
+          <div style={{ display: 'flex', background: 'grey' }}>
+            <img src={selectedSongs[currentSongIndex].album.images[0].url} className={styles.now_playing_img} />
+
             <SongTabs selectedSongs={selectedSongs} skipToNext={skipToNext} activeSong={selectedSongs[currentSongIndex]} updateActiveSong={updateActiveSong} handleOnDragEnd={handleOnDragEnd} />
             {console.log('selectedSong object: ', selectedSongs[currentSongIndex])}
 
@@ -348,8 +341,9 @@ const PlaylistCustomizer = ({ token }) => {
               selectedSongs={selectedSongs}
               currentSongIndex={currentSongIndex}
               prevTrack={skipToPrev}
+              style={{ float: 'right' }}/// //////////create tab open up
             />
-          </>
+          </div>
           )
         : <></>}
     </div>

@@ -10,7 +10,6 @@ const Player = ({
   artists,
   duration,
   trackProgress,
-  onChangeTrackProgress,
   onPlayPause,
   isPlaying,
   nextTrack,
@@ -29,31 +28,54 @@ const Player = ({
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
   }
 
+  const mySlider = document.getElementById('slider')
+  // const sliderValue = document.getElementById('slider-value')
+
+  function onChangeTrackProgress () {
+    const valPercent = (mySlider.value / mySlider.max) * 100
+    mySlider.style.background = `linear-gradient(to right, #3264fe ${valPercent}%, #d5d5d5 ${valPercent}%)`
+    // sliderValue.textContent = mySlider.value
+    onPlayPause()
+  }
+
   const currentProgress = (trackProgress / duration) * 100
 
   return (
     <div className={style.player__container}>
+      {/* <img src={album.images[0].url} className={style.now_playing__img} /> */}
+
       <div className={style.now_playing}>
-        <img src={album.images[0].url} />
-      </div>
-      <div className={style.now_playing}>
-        <div className={style.now_playing__name}>{title}</div>
-        <div className={style.now_playing__artist}>
-          {album.name}
-        </div>
-        <table className={style.stats_table}>
+
+        <div className={style.now_playing__title}>{title}</div>
+        <div className={style.now_playing__album}>{album.name}</div>
+        <table cellspacing='10' className={style.stats_table}>
           <thead className={style.stats_table_header}>
             <tr>
-              <th style={{ borderRight: '2px solid black', borderBottom: '0px solid black' }}>Artist</th>
-              <th style={{ borderRight: '2px solid black' }}>Popularity</th>
-              <th style={{ borderBottom: '0px solid black' }}>Duration</th>
+              <th>Artist</th>
+              <th>Popularity</th>
+              <th>Duration</th>
             </tr>
           </thead>
           <tbody className={style.stats_table_body}>
             <tr className={style.stats_table_body_row}>
-              <td style={{ borderRight: '2px solid black' }}>{selectedSongs[currentSongIndex].artists[0].name}</td>
-              <td style={{ borderRight: '2px solid black' }}>{selectedSongs[currentSongIndex].popularity}/100</td>
+              <td>{selectedSongs[currentSongIndex].artists[0].name}</td>
+              <td>{selectedSongs[currentSongIndex].popularity}/100</td>
               <td>{toMinutesAndSeconds(selectedSongs[currentSongIndex].duration_ms)} minutes</td>
+            </tr>
+
+          </tbody>
+          <thead className={style.stats_table_header}>
+            <tr>
+              <th>Released</th>
+              <th>Tack No.</th>
+              <th>Explicit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className={style.stats_table_body_row}>
+              <td>{selectedSongs[currentSongIndex].album.release_date}</td>
+              <td>{selectedSongs[currentSongIndex].track_number}</td>
+              <td>{selectedSongs[currentSongIndex].explicit === 'true' ? 'maybe' : 'nope'}</td>
             </tr>
           </tbody>
         </table>
@@ -63,10 +85,10 @@ const Player = ({
           <input
             type='range'
             min='0'
-            step='1'
-            max={duration || 0}
-            value={trackProgress}
+            max={duration || 100}
+            value={selectedSongs[currentSongIndex].progress_ms}
             onChange={onChangeTrackProgress}
+            id='slider'
           />
         </div>
         <div className={classnames(style.audio_controls)}>

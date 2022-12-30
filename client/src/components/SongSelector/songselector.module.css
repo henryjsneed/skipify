@@ -33,7 +33,7 @@
 );
 } */
 
-.song_check_label {
+/* .song_check_label {
   font-size: 21px;
   color: black;
   box-sizing: border-box;
@@ -41,8 +41,8 @@
   padding: 0;
   font-family: 'Kumbh Sans', sans-serif;
   scroll-behavior: smooth;
-  background-color: white;
-}
+  background-color: green;
+} */
 
 .song_checks {
   /* box-sizing: border-box;
@@ -72,12 +72,14 @@
   margin-left: 5px;
   background-color: none;
   font-family: Arial;
-  font-size: 18px;
+  font-size: 17.5px;
   color: white;
   margin-top: 10px;
   margin-bottom: 10px;
 
-
+  text-overflow: cut;
+white-space: nowrap;
+overflow: hidden; 
   /* margin-left: 50px;
   background-color: white;
   font-family: Arial;
@@ -206,8 +208,8 @@
 
 .song_form_group {  
   color: #fff;
-  /* box-sizing: border-box; */
   margin: 0;
+  
   padding: 0;
   font-family: 'Kumbh Sans', sans-serif;
   scroll-behavior: smooth;
@@ -234,13 +236,13 @@
   margin-left: 4.5px;
 
   border: 1px solid none;
-  width: 40px;
+  width: 33px;
 } 
 
 .song_body::-webkit-scrollbar {
-  width: 30px;
+  width: 33px;
   background-color: black;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 .song_body::-webkit-scrollbar-thumb {
   border-radius: 100px;
@@ -252,7 +254,8 @@
     #4801ff 100%
   );
   /* border: 5px solid blue; */
-  height:30px;
+  height:33px;
+  border: 2px solid currentColor;
 }
 
 /**title**/
